@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="bakeryApp">
+<head>
+    <title>Bakery Sample</title>
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script src="Scripts/Angular.1.3.js"></script>
+    <script src="Scripts/angular-route.js"></script>
+    <script src="Scripts/bootstrap.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/Site.css" rel="stylesheet" />
+    <link href="Content/main.css" rel="stylesheet"/>
+    <script>
+        var bakeryApp = angular.module('bakeryApp', ['ngRoute']);
+
+        bakeryApp.config( function ($routeProvider) {
+            $routeProvider.
+                when('/', {
+                    templateUrl: '/template/bakery-home.html'
+                }).
+                when('/product', {
+                    templateUrl: '/template/bakery-products.html',
+                    controller: 'productCtrl'
+                }).
+                when('/location', {
+                    templateUrl: '/template/bakery-location.html',
+                    controller: 'locationListCtrl'
+                }).
+                otherwise({
+                    redirectTo: '/'
+                });
+        });
+        bakeryApp.factory('locations', function () {
+            return {
+                list: [{
+                        name: 'Parramata',
+                        location: { lat: -33.817301, long: 151.003220 },
+                        contact: { email: 'parramatta@bakery.com.au', phone: '02-1234567' }
+                    },
+                    {
+                        name: 'Mascot',
+                        location: { lat: -33.922956, long: 151.187743 },
+                        contact: { email: 'mascot@bakery.com.au', phone: '02-1234567' }
+                    },
+                    {
+                        name: 'Mosman',
+                        location: { lat: -33.823384, long: 151.242229 },
+                        contact: { email: 'mosman@bakery.com.au', phone: '02-1234567' }
+                    }]
+            };
+        });
+
+        bakeryApp.directive('branch', ['locations', function (locations) {
+
+            function createMap(elem, attrs) {
+                var canvas = $(elem).find('.embed-responsive-item')[0];
+                var data = JSON.parse(attrs.locdata);
+                var loc = new google.maps.LatLng(data.location.lat, data.location.long);
+                var opt = {
+                    center: loc,
+                    zoom: 15,
+                    mapMarker: true,
+                    zoomControl: true,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+
+                var map = new google.maps.Map(canvas, opt);
+
+                var marker = new google.maps.Marker({
+                    position: loc,
+                    map: map,
+                    title: data.name
+                });
+
+                canvas.gmap = map;
+                console.log(map);
+                if (locations.list[0].name != data.name) {
+                    $(canvas).parent().parent().hide();
+                }
+
+            };
+
+            return {
+                scope: {
+                    branch: '='
+                },
+                restrict: 'A',
+                templateUrl: '/template/location.html',
+                link: function ($scope, elem, attrs) {
+                    createMap(elem, attrs);
+                }
+            }
+        }]);
+
+        bakeryApp.controller('homeCtrl', ['$scope', '$routeParams', 'locations', function ($scope, $routeParams, locations) {
+
+        }]);
+
+        bakeryApp.controller('productCtrl', ['$scope', '$routeParams', 'locations', function ($scope, $routeParams, locations) {
+
+        }]);
+
+        bakeryApp.controller('locationListCtrl', ['$scope', '$routeParams', 'locations', function ($scope, $routeParams, locations) {
+
+            $scope.locations = locations.list;
+           
+            $scope.displayLocation = function (locationName) {
+
+                $("div[id*=loc_]").each(function () {
+                    if ($(this).attr('id') == 'loc_' + locationName) {
+                        $(this).show();
+
+                        var map = $(this).find('.embed-responsive-item')[0].gmap;
+                        var center = map.getCenter();
+                        google.maps.event.trigger(map, 'resize');
+                        map.setCenter(center);
+                    }
+                    else {
+                        $(this).hide();
+                    }
+                });
+            };
+        }]);
+
+    </script>
+    <script>
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/">Home</a></li>
+                    <li><a href="#/product">Products</a></li>
+                    <li><a href="#/location">Location</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <!-- first section - Home -->
+    <div ng-view>
+
+    </div>
+    <!-- footer -->
+    <footer>
+        <hr />
+        <div class="container">
+            <p class="text-right">Copyright &copy; Your Company 2014</p>
+        </div>
+    </footer>
+    <!-- /footer -->
+</body>
+</html>

@@ -1,0 +1,6 @@
+﻿<div class="container">
+    <ul class="nav nav-tabs nav-stacked">
+        <li ng-repeat="location in locations"><a href="" class="navbar-nav" ng-click="displayLocation(location.name);$event.preventDefault();" >{{location.name}}</a></li>
+    </ul>
+    <div ng-repeat="location in locations" branch="location" locdata="{{location}}"></div>
+</div>

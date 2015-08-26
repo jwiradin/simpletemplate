@@ -1,0 +1,14 @@
+﻿<div id="loc_{{branch.name}}" class="row">
+    <div class="embed-responsive embed-responsive-16by9 col-xs-12 col-lg-10 col-md-10">
+        <div class="embed-responsive-item">
+            {{branch.location.lat}}, {{branch.location.long}}
+        </div>
+    </div>
+    <div class="col-xs-12 col-lg-2 col-md-2">
+        <p>Contact our friendly staff</>
+        <ul class="list-unstyled">
+            <li><span class="glyphicon glyphicon-phone"></span> <a href="tel:{{branch.contact.phone}}">{{branch.contact.phone}}</a></li>
+            <li><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:{{branch.contact.email}}">{{branch.contact.email}}</a></li>
+        </ul>
+    </div>
+</div>

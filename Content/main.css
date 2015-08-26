@@ -1,0 +1,83 @@
+﻿/* general styles */
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+/* padded section */
+.pad-section {
+  padding: 50px 0;
+}
+.pad-section img {
+  width: 100%;
+}
+
+/* additional sections */
+#home {
+    background: url('/images/background/bread-basket-background.jpg') no-repeat center center fixed;
+    display: table;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+     -khtml-opacity:.50; 
+     -moz-opacity:.50; 
+     -ms-filter:"alpha(opacity=50)";
+      filter:alpha(opacity=50);
+      filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.5);
+}
+
+#about {
+}
+
+#products {
+  background-color: #306d9f;
+  color: #ffffff;
+}
+#products .glyphicon {
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  display: inline-block;
+  font-size: 60px;
+  height: 140px;
+  line-height: 140px;
+  text-align: center;
+  vertical-align: middle;
+  width: 140px;
+}
+
+#location {
+    background: url('/images/background/food-sourdough-01-background.jpg') no-repeat center center fixed;
+    display: table;
+    height: 800px;
+    position: relative;
+    width: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#information .panel {
+  opacity: 0.85;
+}
+
+#google_map {
+  height: 50%;
+  width:50%;
+}
+
+footer {
+  padding: 20px 0;
+}
+footer .glyphicon {
+  color: #333333;
+  font-size: 60px;
+}
+footer .glyphicon:hover {
+  color: #306d9f;
+}
+
