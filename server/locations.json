@@ -1,0 +1,17 @@
+﻿    [
+        {
+            "name": "Parramata",
+            "location": { "lat": -33.817301, "long": 151.003220 },
+            "contact": { "email": "parramatta@bakery.com.au", "phone": "02-1234567" }
+        },
+        {
+            "name": "Mascot",
+            "location": { "lat": -33.922956, "long": 151.187743 },
+            "contact": { "email": "mascot@bakery.com.au", "phone": "02-1234567" }
+        },
+        {
+            "name": "Mosman",
+            "location": { "lat": -33.823384, "long": 151.242229 },
+            "contact": { "email": "mosman@bakery.com.au", "phone": "02-1234567" }
+        }
+    ]
