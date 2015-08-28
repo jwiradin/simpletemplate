@@ -1,1 +1,9 @@
-﻿<div>Products</div>
+﻿<div class="container" ng-controller="productCtrl">
+    <div ng-repeat="row in chunkedData" ng-if="chunkedData">
+        <div class="col-sm-4 col-lg-4" ng-repeat="product in row">
+            <p class="product-name">{{product.name}}</p>
+            <img ng-src="{{product.url}}" class="img-responsive" />
+        </div>
+    </div>
+    <div></div>
+</div>
