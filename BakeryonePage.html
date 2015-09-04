@@ -208,12 +208,19 @@
         }]);
 
         bakeryApp.controller('locationListCtrl', ['$scope', '$routeParams', 'locations', function ($scope, $routeParams, locations) {
+            $scope.curTab = '';
 
-            locations.list(function (data) {
-                $scope.locations = data;
-            });
+            init();
+
+            function init() {
+                locations.list(function (data) {
+                    $scope.locations = data;
+                    $scope.curTab = data[0].name;
+                });
+            }
 
             $scope.displayLocation = function (locationName) {
+                $scope.curTab = locationName;
 
                 $("div[id*=loc_]").each(function () {
                     if ($(this).attr('id') == 'loc_' + locationName) {
@@ -251,7 +258,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="#/" class="active" data-toggle="pills">Home</a></li>
+                    <li><a href="#/" data-toggle="pills">Home</a></li>
                     <li><a href="#/product" data-toggle="pills">Products</a></li>
                     <li><a href="#/location" data-toggle="pills">Location</a></li>
                     <li><a href="#/contactus" data-toggle="pills">Contact Us</a></li>
