@@ -1,1 +1,41 @@
-﻿<div>Contact Us</div>
+﻿<div class="container">
+    <form name="contactus" novalidate>
+        <idv class="form-group" ng-class="{'has-error' : contactus.name.$touched && contactus.name.$invalid}">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control"
+                   ng-model="contact.name"
+                   required />
+        </idv>
+        <div class="help-block" ng-messages="contactus.name.$error" ng-if="contactus.name.$touched && contactus.name.$invalid">
+            <p ng-message="required">Name is required.</p>
+        </div>
+
+        <div class="form-group" ng-class="{'has-error' : contactus.email.$touched && contactus.email.$invalid}">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control"
+                   ng-model="contact.email"
+                   ng-minlength="5"
+                   ng-maxlength="20"
+                   required>
+        </div>
+        <div class="help-block" ng-messages="contactus.email.$error" ng-if="contactus.email.$touched && contactus.email.$invalid">
+            <p ng-message="required">Email is required.</p>
+            <p ng-message="email">Invalid email format.</p>
+        </div>
+
+        <div class="form-group" ng-class="{'has-error' : contactus.message.$touched && contactus.message.$invalid}">
+            <label>Message</label>
+            <input type="text" name="message" class="form-control"
+                   ng-model="contact.message"
+                   required>
+        </div>
+        <div class="help-block" ng-messages="contactus.message.$error" ng-if="contactus.message.$touched && contactus.message.$invalid">
+            <p ng-message="required">Message is required.</p>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn" ng-disabled="contactus.$invalid" ng-click="submit()">Submit</button>
+        </div>
+
+    </form>
+</div>
