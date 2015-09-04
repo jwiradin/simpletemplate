@@ -19,23 +19,23 @@
 
             $routeProvider.
                 when('/', {
-                    templateUrl: '/template/bakery-home.html',
+                    templateUrl: './template/bakery-home.html',
                     controller : 'homeCtrl'
                 }).
                 when('/product', {
-                    templateUrl: '/template/bakery-products.html',
+                    templateUrl: './template/bakery-products.html',
                     controller: 'productCtrl'
                 }).
                 when('/contactus', {
-                    templateUrl: '/template/bakery-contactus.html',
+                    templateUrl: './template/bakery-contactus.html',
                     controller: 'contactusCtrl'
                 }).
                 when('/location', {
-                    templateUrl: '/template/bakery-location.html',
+                    templateUrl: './template/bakery-location.html',
                     controller: 'locationListCtrl'
                 }).
                 otherwise({
-                    redirectTo: '/'
+                    redirectTo: './'
                 });
         });
 
@@ -43,7 +43,7 @@
             function getProducts() {
                 var opt = {
                     method: 'get',
-                    url: '/server/products.json',
+                    url: './server/products.json',
                     cache:true
                 };
 
@@ -67,7 +67,7 @@
 
                 var opt = {
                     method: "get",
-                    url: "/server/locations.json",
+                    url: "./server/locations.json",
                     cache: true
                 }
                 return ($http(opt));
@@ -151,7 +151,7 @@
 
                 var opt = {
                     animation: false,
-                    templateUrl: '/template/bakery-confirm.html',
+                    templateUrl: './template/bakery-confirm.html',
                     controller: 'modalInstanceCtrl',
                     resolve: {
                         contact: function () {
