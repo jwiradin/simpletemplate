@@ -40,23 +40,6 @@
                 });
         });
 
-
-        bakeryApp.factory('feedbacks', ['$http', '$q', function ($http, $q) {
-            var _feedbacks = [];
-
-            return {
-                add: function (data) {
-
-                    var opt = {
-                        method: 'put',
-                        url: './server/feedback'
-                    };
-                    return q
-                }
-            
-            };
-        }]);
-
         bakeryApp.factory('products', ['$http', function ($http) {
             function getProducts() {
                 var opt = {
@@ -154,7 +137,7 @@
         bakeryApp.controller('homeCtrl', ['$scope', function ($scope) {
         }]);
 
-        bakeryApp.controller('contactusCtrl', ['$scope', '$modal', 'feedbacks',  function ($scope, $modal, feedbacks) {
+        bakeryApp.controller('contactusCtrl', ['$scope', '$modal', function ($scope, $modal) {
 
 
             function initContact() {
@@ -166,7 +149,6 @@
             };
 
             $scope.submit = function () {
-                feedbacks.add($scope.contact).then(function(){
                     var opt = {
                         animation: false,
                         templateUrl: './template/bakery-confirm.html',
@@ -188,9 +170,6 @@
                     }, function () {
                         console.log('Error');
                     });
-
-                
-                });
             }
 
             initContact();
