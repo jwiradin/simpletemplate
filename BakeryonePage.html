@@ -7,13 +7,14 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-resource.min.js"></script>
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.4.js"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <link href="./Content/main.css" rel="stylesheet" />
 
     <script>
-        var bakeryApp = angular.module('bakeryApp', ['ngRoute', 'ui.bootstrap']);
+        var bakeryApp = angular.module('bakeryApp', ['ngRoute', 'ui.bootstrap', 'ngResource']);
 
         bakeryApp.config(function ($routeProvider) {
 
@@ -38,6 +39,23 @@
                     redirectTo: './'
                 });
         });
+
+
+        bakeryApp.factory('feedbacks', ['$http', '$q', function ($http, $q) {
+            var _feedbacks = [];
+
+            return {
+                add: function (data) {
+
+                    var opt = {
+                        method: 'put',
+                        url: './server/feedback'
+                    };
+                    return q
+                }
+            
+            };
+        }]);
 
         bakeryApp.factory('products', ['$http', function ($http) {
             function getProducts() {
@@ -136,7 +154,7 @@
         bakeryApp.controller('homeCtrl', ['$scope', function ($scope) {
         }]);
 
-        bakeryApp.controller('contactusCtrl', ['$scope', '$modal', function ($scope, $modal) {
+        bakeryApp.controller('contactusCtrl', ['$scope', '$modal', 'feedbacks',  function ($scope, $modal, feedbacks) {
 
 
             function initContact() {
@@ -145,32 +163,34 @@
                     email: '',
                     message: ''
                 };
-            }
+            };
 
             $scope.submit = function () {
-
-                var opt = {
-                    animation: false,
-                    templateUrl: './template/bakery-confirm.html',
-                    controller: 'modalInstanceCtrl',
-                    resolve: {
-                        contact: function () {
-                            return $scope.contact;
+                feedbacks.add($scope.contact).then(function(){
+                    var opt = {
+                        animation: false,
+                        templateUrl: './template/bakery-confirm.html',
+                        controller: 'modalInstanceCtrl',
+                        resolve: {
+                            contact: function () {
+                                return $scope.contact;
+                            }
                         }
-                    }
-                };
+                    };
 
-                var modalInstance = $modal.open(opt);
+                    var modalInstance = $modal.open(opt);
 
-                modalInstance.result.then(function () {
-                    initContact();
-                    $scope.contactus.$setPristine();
-                    $scope.contactus.$setUntouched();
+                    modalInstance.result.then(function () {
+                        initContact();
+                        $scope.contactus.$setPristine();
+                        $scope.contactus.$setUntouched();
 
-                }, function () {
-                    console.log('Error');
+                    }, function () {
+                        console.log('Error');
+                    });
+
+                
                 });
-
             }
 
             initContact();
@@ -247,16 +267,16 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+                <button type="button" class="navbar-toggle" ng-init="navbarCollapsed = true" ng-click="navbarCollapsed = !navbarCollapsed" data-target="#navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand">Brand</a>
+                <a class="navbar-brand">J2 Bakery</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+            <div class="collapse navbar-collapse" collapse="navbarCollapsed" id="navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="#/" data-toggle="pills">Home</a></li>
                     <li><a href="#/product" data-toggle="pills">Products</a></li>
